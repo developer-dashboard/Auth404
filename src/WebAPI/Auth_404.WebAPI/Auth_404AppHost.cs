@@ -42,7 +42,7 @@ namespace Auth_404.WebAPI
             container.Register(basicAuthProvider);
 
             Plugins.Add(new AuthFeature( () => new AuthUserSession(), new IAuthProvider[] {basicAuthProvider, }, SystemConstants.LoginUrl ));
-
+            
             var userRepo = new OrmLiteAuthRepository(_dbConnectionFactory);
             container.Register<IAuthRepository>(userRepo);
 

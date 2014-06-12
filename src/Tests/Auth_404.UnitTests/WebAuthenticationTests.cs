@@ -57,8 +57,7 @@ namespace Auth_404.UnitTests
             var response = client.Get<List<CurrencyType>>("/currencytypes");
             Assert.IsNotNull(response);
         }
-
-
+        
         [Test]
         public void get_currency_types_ok_without_authentication()
         {
@@ -66,8 +65,7 @@ namespace Auth_404.UnitTests
             var response = client.Get<List<CurrencyType>>("/currencytypes");
             Assert.IsNotNull(response);
         }
-
-
+        
         [Test]
         public void post_transaction_fails_without_authentication()
         {
