@@ -14,19 +14,25 @@ namespace Auth_404.DatabaseSetup
             Settup_Test_Database();
         }
 
-        public static void Settup_Test_Database(IDbConnectionFactory dbFactory = null)
+        public static void Settup_Test_Database(IDbConnectionFactory appDbFactory = null, IDbConnectionFactory authDbFactory = null)
         {
-            var dbConnectionFactory = dbFactory;
-
-
-            if (dbConnectionFactory == null)
+            var appDbConnectionFactory = appDbFactory;
+            var authDbConnectionFactory = authDbFactory;
+            
+            if (appDbConnectionFactory == null)
             {
-                var connectionString = ConfigurationManager.ConnectionStrings["Auth404Db"].ConnectionString;
-                dbConnectionFactory = new OrmLiteConnectionFactory(connectionString, SqlServerDialect.Provider);
+                var connectionString = ConfigurationManager.ConnectionStrings["AppDb"].ConnectionString;
+                appDbConnectionFactory = new OrmLiteConnectionFactory(connectionString, SqlServerDialect.Provider);
+            }
+
+            if (authDbConnectionFactory == null)
+            {
+                var connectionString = ConfigurationManager.ConnectionStrings["AuthDb"].ConnectionString;
+                authDbConnectionFactory = new OrmLiteConnectionFactory(connectionString, SqlServerDialect.Provider);
             }
 
 
-            using (var db = dbConnectionFactory.OpenDbConnection())
+            using (var db = appDbConnectionFactory.OpenDbConnection())
             {
                 if (db.TableExists("Transaction")) db.DropTable<Transaction>();
                 if (db.TableExists("CurrencyType")) db.DropTable<CurrencyType>();
@@ -68,7 +74,9 @@ namespace Auth_404.DatabaseSetup
                 db.Insert(new CurrencyType {Id = (long) CURRENCY_TYPE.Peso, Description = "Mexican Peso", Code = "MXN", Symbol = "$"});
             }
 
-            var userRepo = new OrmLiteAuthRepository(dbConnectionFactory);
+            
+            
+            var userRepo = new OrmLiteAuthRepository(authDbConnectionFactory);
             userRepo.DropAndReCreateTables();
             
             var user = new UserAuth

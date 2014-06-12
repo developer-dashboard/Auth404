@@ -24,16 +24,19 @@ namespace Auth_404.UnitTests
             get { return "http://localhost:50334/"; }
         }
 
-        private IDbConnectionFactory _dbConnectionFactory;
+        private IDbConnectionFactory _appDbConnectionFactory;
+        private IDbConnectionFactory _authDbConnectionFactory;
 
         [TestFixtureSetUp]
         public void on_set_up()
         {
             LogManager.LogFactory = new Log4NetFactory(true);
-            _dbConnectionFactory = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            DataBaseHelper.Settup_Test_Database(_dbConnectionFactory);
+            _appDbConnectionFactory = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
+            _authDbConnectionFactory = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
+            
+            DataBaseHelper.Settup_Test_Database(_appDbConnectionFactory, _authDbConnectionFactory);
 
-            _appHost = new Auth_404AppHost(_dbConnectionFactory);
+            _appHost = new Auth_404AppHost(_appDbConnectionFactory, _authDbConnectionFactory);
             _appHost.Init();
             _appHost.Start(ListeningOn);
         }

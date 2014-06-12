@@ -8,7 +8,6 @@ using Funq;
 using RESTServiceUtilities.Interfaces;
 using ServiceStack;
 using ServiceStack.Auth;
-using ServiceStack.Caching;
 using ServiceStack.Data;
 using ServiceStack.Logging;
 using ServiceStack.Logging.Log4Net;
@@ -21,39 +20,48 @@ namespace Auth_404.WebAPI
     public class Auth_404AppHost : AppHostHttpListenerBase
     {
 
-        private readonly IDbConnectionFactory _dbConnectionFactory;
+        private readonly IDbConnectionFactory _appDbConnectionFactory;
+        private readonly IDbConnectionFactory _authDbConnectionFactory;
 
         public Auth_404AppHost() : base("Auth 404 Services", typeof(Auth_404AppHost).Assembly)
         {
-            _dbConnectionFactory = new OrmLiteConnectionFactory(ConfigurationManager.ConnectionStrings["Auth404Db"].ConnectionString, SqlServerDialect.Provider);
+            _appDbConnectionFactory = new OrmLiteConnectionFactory(ConfigurationManager.ConnectionStrings["AppDb"].ConnectionString, SqlServerDialect.Provider);
+            _authDbConnectionFactory = new OrmLiteConnectionFactory(ConfigurationManager.ConnectionStrings["AuthDb"].ConnectionString, SqlServerDialect.Provider);
         }
 
-        public Auth_404AppHost(IDbConnectionFactory dbConnectionFactory) : base("Auth 404 Services", typeof(Auth_404AppHost).Assembly)
+        public Auth_404AppHost(IDbConnectionFactory appDbConnectionFactory, IDbConnectionFactory authDbConnectionFactory) : base("Auth 404 Services", typeof(Auth_404AppHost).Assembly)
         {
-            _dbConnectionFactory = dbConnectionFactory;
+            _appDbConnectionFactory = appDbConnectionFactory;
+            _authDbConnectionFactory = authDbConnectionFactory;
         }
 
         public override void Configure(Container container)
         {
             LogManager.LogFactory = new Log4NetFactory(true);
+            container.Register(_appDbConnectionFactory);
             
-            container.Register(_dbConnectionFactory);
+            
             var basicAuthProvider = new BasicAuthProvider();
-            container.Register(basicAuthProvider);
+            var authUserSession = new AuthUserSession();
+            var userRepo = new OrmLiteAuthRepository(_authDbConnectionFactory);
 
-            Plugins.Add(new AuthFeature( () => new AuthUserSession(), new IAuthProvider[] {basicAuthProvider, }, SystemConstants.LoginUrl ));
-            
-            var userRepo = new OrmLiteAuthRepository(_dbConnectionFactory);
+            container.Register<IAuthProvider>(basicAuthProvider);
+            container.Register<IAuthSession>(authUserSession);
             container.Register<IAuthRepository>(userRepo);
 
-            var cacheClient = new MemoryCacheClient();
-            container.Register(cacheClient);
+            Plugins.Add(new AuthFeature( () => authUserSession, new IAuthProvider[] {basicAuthProvider }, SystemConstants.LoginUrl ));
+            
+            
            
-            var currencyTypeRepository = new CurrencyTypeRepository { DbConnectionFactory = _dbConnectionFactory };
-            var transactionTypeRepository = new TransactionTypeRepository { DbConnectionFactory = _dbConnectionFactory };
-            var transactionStatusTypeRepository = new TransactionStatusTypeRepository { DbConnectionFactory = _dbConnectionFactory };
-            var transactionNotificationStatusTypeRepository = new TransactionNotificationStatusTypeRepository { DbConnectionFactory = _dbConnectionFactory };
-            var transactionRepository = new TransactionRepository { DbConnectionFactory = _dbConnectionFactory };
+
+           // var cacheClient = new MemoryCacheClient();
+           // container.Register(cacheClient);
+           
+            var currencyTypeRepository = new CurrencyTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
+            var transactionTypeRepository = new TransactionTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
+            var transactionStatusTypeRepository = new TransactionStatusTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
+            var transactionNotificationStatusTypeRepository = new TransactionNotificationStatusTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
+            var transactionRepository = new TransactionRepository { DbConnectionFactory = _appDbConnectionFactory };
 
             var currencyTypeLogic = new CurrencyTypeLogic { Repository = currencyTypeRepository };
             var transactionTypeLogic = new TransactionTypeLogic { Repository = transactionTypeRepository };

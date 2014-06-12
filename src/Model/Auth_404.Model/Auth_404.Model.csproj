@@ -117,10 +117,10 @@
     <Compile Include="Operations\GetTransactionStatusTypes.cs" />
     <Compile Include="Operations\GetTransactionTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\GetUserAuthRequest.cs" />
+    <Compile Include="Requests\GetUserAuthResponse.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

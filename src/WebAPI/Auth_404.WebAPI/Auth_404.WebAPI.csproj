@@ -152,6 +152,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\CurrencyTypeWebService.cs" />
     <Compile Include="Services\TransactionNotificationStatusTypeWebService.cs" />
     <Compile Include="Services\TransactionStatusTypeWebService.cs" />
