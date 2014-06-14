@@ -12,11 +12,11 @@ using ServiceStack.Data;
 using ServiceStack.Logging;
 using ServiceStack.Logging.Log4Net;
 using ServiceStack.OrmLite;
-using ServiceStack.Redis;
+//using ServiceStack.Redis;
 using WebServiceUtilities.Utilities;
 
 namespace Auth_404.WebAPI
-{
+{ 
     public class Auth_404AppHost : AppHostHttpListenerBase
     {
 
@@ -77,8 +77,8 @@ namespace Auth_404.WebAPI
            
             CatchAllHandlers.Add((httpMethod, pathInfo, filePath) => pathInfo.StartsWith("/favicon.ico") ? new FavIconHandler() : null);
 
-            var redisLocation = ConfigurationManager.AppSettings["ReddisService"];
-            Container.Register<IRedisClientsManager>(new PooledRedisClientManager(redisLocation));
+            //var redisLocation = ConfigurationManager.AppSettings["ReddisService"];
+            //Container.Register<IRedisClientsManager>(new PooledRedisClientManager(redisLocation));
            
 
         }
