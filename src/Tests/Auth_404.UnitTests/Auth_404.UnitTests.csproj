@@ -72,6 +72,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\ServiceStack.OrmLite.4.0.21\lib\net40\ServiceStack.OrmLite.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.OrmLite.Sqlite.Windows, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\ServiceStack.OrmLite.Sqlite.Windows.4.0.21\lib\net40\ServiceStack.OrmLite.Sqlite.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ServiceStack.OrmLite.SqlServer, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\ServiceStack.OrmLite.SqlServer.4.0.21\lib\net40\ServiceStack.OrmLite.SqlServer.dll</HintPath>
