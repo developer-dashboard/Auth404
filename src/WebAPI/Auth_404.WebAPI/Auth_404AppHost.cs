@@ -39,20 +39,20 @@ namespace Auth_404.WebAPI
         {
             LogManager.LogFactory = new Log4NetFactory(true);
             container.Register(_appDbConnectionFactory);
-            
-            
-            var basicAuthProvider = new BasicAuthProvider();
-            var credentialsAuthProvider = new CredentialsAuthProvider();
-            var authUserSession = new AuthUserSession();
+           
+            Plugins.Add(new AuthFeature(() => new AuthUserSession(),
+                new IAuthProvider[] { new BasicAuthProvider(),  new CredentialsAuthProvider()},
+                SystemConstants.LoginUrl));
+           
             var userRepo = new OrmLiteAuthRepository(_authDbConnectionFactory);
-
+            /*
             container.Register<IAuthProvider>(basicAuthProvider);
             container.Register<IAuthSession>(authUserSession);
+             */
+            
             container.Register<IAuthRepository>(userRepo);
 
-            Plugins.Add(new AuthFeature( () => authUserSession,
-                new IAuthProvider[] {basicAuthProvider, credentialsAuthProvider },
-                SystemConstants.LoginUrl ));
+           
             
             
            

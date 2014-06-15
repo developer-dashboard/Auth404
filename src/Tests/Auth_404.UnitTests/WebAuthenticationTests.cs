@@ -111,7 +111,7 @@ namespace Auth_404.UnitTests
         }
 
         [Test]
-        public void test_credentials_provider()
+        public void test_logout()
         {
             var client = GetJsonClient();
             var authResponse = client.Send(new Authenticate
@@ -150,13 +150,10 @@ namespace Auth_404.UnitTests
             response = client.Get<AuthenticateResponse>("/auth");
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.SessionId);
-            Assert.AreEqual(DefaultAdmin.Username, response.UserName);
+            Assert.IsNull(response.UserName);
 
-            transactions = client.Get<List<Transaction>>("/transactions");
-            Assert.IsNotNull(transactions);
-
-          
-
+            var error = Assert.Throws<WebServiceException>(() =>client.Get<List<Transaction>>("/transactions"));
+            Assert.AreEqual("Unauthorized", error.Message);
         }
     }
 }
