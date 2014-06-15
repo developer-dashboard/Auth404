@@ -42,6 +42,7 @@ namespace Auth_404.WebAPI
             
             
             var basicAuthProvider = new BasicAuthProvider();
+            var credentialsAuthProvider = new CredentialsAuthProvider();
             var authUserSession = new AuthUserSession();
             var userRepo = new OrmLiteAuthRepository(_authDbConnectionFactory);
 
@@ -49,7 +50,9 @@ namespace Auth_404.WebAPI
             container.Register<IAuthSession>(authUserSession);
             container.Register<IAuthRepository>(userRepo);
 
-            Plugins.Add(new AuthFeature( () => authUserSession, new IAuthProvider[] {basicAuthProvider }, SystemConstants.LoginUrl ));
+            Plugins.Add(new AuthFeature( () => authUserSession,
+                new IAuthProvider[] {basicAuthProvider, credentialsAuthProvider },
+                SystemConstants.LoginUrl ));
             
             
            
