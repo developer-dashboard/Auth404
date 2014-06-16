@@ -39,27 +39,13 @@ namespace Auth_404.WebAPI
         {
             LogManager.LogFactory = new Log4NetFactory(true);
             container.Register(_appDbConnectionFactory);
-           
+
             Plugins.Add(new AuthFeature(() => new AuthUserSession(),
-                new IAuthProvider[] { new BasicAuthProvider(),  new CredentialsAuthProvider()},
-                SystemConstants.LoginUrl));
+                new IAuthProvider[] {new BasicAuthProvider(), new CredentialsAuthProvider()}, SystemConstants.LoginUrl));
            
             var userRepo = new OrmLiteAuthRepository(_authDbConnectionFactory);
-            /*
-            container.Register<IAuthProvider>(basicAuthProvider);
-            container.Register<IAuthSession>(authUserSession);
-             */
-
             container.Register<IUserAuthRepository>(userRepo);
-
-           
             
-            
-           
-
-           // var cacheClient = new MemoryCacheClient();
-           // container.Register(cacheClient);
-           
             var currencyTypeRepository = new CurrencyTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
             var transactionTypeRepository = new TransactionTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
             var transactionStatusTypeRepository = new TransactionStatusTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
@@ -79,11 +65,6 @@ namespace Auth_404.WebAPI
             container.Register<IRest<Transaction, GetTransactions>>(transactionLogic);
            
             CatchAllHandlers.Add((httpMethod, pathInfo, filePath) => pathInfo.StartsWith("/favicon.ico") ? new FavIconHandler() : null);
-
-            //var redisLocation = ConfigurationManager.AppSettings["ReddisService"];
-            //Container.Register<IRedisClientsManager>(new PooledRedisClientManager(redisLocation));
-           
-
         }
     }
    

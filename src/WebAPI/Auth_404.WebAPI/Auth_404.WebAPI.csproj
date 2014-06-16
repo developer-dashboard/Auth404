@@ -142,7 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="LoginPage.html" />
     <Content Include="README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
