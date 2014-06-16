@@ -1,4 +1,4 @@
-﻿
+﻿/*
 using ServiceStack;
 
 namespace Auth_404.Model.Requests
@@ -11,3 +11,4 @@ namespace Auth_404.Model.Requests
         public bool IsSuccess { get;  set; }
     }
 }
+*/

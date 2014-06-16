@@ -1,4 +1,6 @@
-﻿using Auth_404.Model.Data;
+﻿/*
+
+using Auth_404.Model.Data;
 using ServiceStack;
 
 namespace Auth_404.Model.Requests
@@ -12,4 +14,4 @@ namespace Auth_404.Model.Requests
 
         public Login LoginAccount { get; set; }
     }
-}
+}*/

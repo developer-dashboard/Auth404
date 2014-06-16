@@ -1,4 +1,5 @@
-﻿using ServiceStack;
+﻿/*
+using ServiceStack;
 
 namespace Auth_404.Model.Requests
 {
@@ -9,3 +10,4 @@ namespace Auth_404.Model.Requests
         public string Email { get; set; }
     }
 }
+*/

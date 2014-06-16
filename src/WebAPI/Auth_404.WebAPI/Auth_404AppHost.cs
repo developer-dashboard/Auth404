@@ -42,6 +42,8 @@ namespace Auth_404.WebAPI
 
             Plugins.Add(new AuthFeature(() => new AuthUserSession(),
                 new IAuthProvider[] {new BasicAuthProvider(), new CredentialsAuthProvider()}, SystemConstants.LoginUrl));
+
+            Plugins.Add(new RegistrationFeature());
            
             var userRepo = new OrmLiteAuthRepository(_authDbConnectionFactory);
             container.Register<IUserAuthRepository>(userRepo);

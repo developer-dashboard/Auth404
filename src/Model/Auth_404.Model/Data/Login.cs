@@ -1,4 +1,5 @@
-﻿namespace Auth_404.Model.Data
+﻿/*
+namespace Auth_404.Model.Data
 {
     public class Login
     {
@@ -8,3 +9,4 @@
         public string LastName { get; set; }
     }
 }
+*/
