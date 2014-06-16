@@ -79,18 +79,28 @@ namespace Auth_404.DatabaseSetup
             var userRepo = new OrmLiteAuthRepository(authDbConnectionFactory);
             userRepo.DropAndReCreateTables();
             
-            var user = new UserAuth
+            var defaultAdmin = new UserAuth
             {
-                Id = DefaultAdmin.Id,
-                DisplayName = DefaultAdmin.Username,
+                DisplayName = DefaultAdmin.Email,
                 Email = DefaultAdmin.Email,
-                UserName = DefaultAdmin.Username,
-                FirstName = DefaultAdmin.Username,
                 Roles = DefaultAdmin.Roles,
                 Permissions = DefaultAdmin.Permissions
             };
 
-            CreateUser(userRepo, user, DefaultAdmin.Password);
+            CreateUser(userRepo, defaultAdmin, DefaultAdmin.Password);
+
+            var testUser = new UserAuth
+            {
+                DisplayName = TestUser.FirstName + " " + TestUser.LastName,
+                Email = TestUser.Email,
+                FirstName = TestUser.FirstName,
+                LastName = TestUser.LastName,
+                Roles = TestUser.Roles,
+                Permissions = TestUser.Permissions
+            };
+
+            CreateUser(userRepo, testUser, TestUser.Password);
+
         }
 
         private static void CreateUser(IUserAuthRepository userRepo, IUserAuth user, string password)

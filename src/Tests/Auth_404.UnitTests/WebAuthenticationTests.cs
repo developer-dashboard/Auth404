@@ -57,11 +57,11 @@ namespace Auth_404.UnitTests
         public void get_currency_types_ok_with_authentication()
         {
             var client = GetJsonClient();
-            client.SetCredentials(DefaultAdmin.Username, DefaultAdmin.Password);
+            client.SetCredentials(DefaultAdmin.Email, DefaultAdmin.Password);
             var response = client.Get<List<CurrencyType>>("/currencytypes");
             Assert.IsNotNull(response);
         }
-
+        
         [Test]
         public void get_currency_types_ok_without_authentication()
         {
@@ -104,7 +104,7 @@ namespace Auth_404.UnitTests
                 GatewayResponse = "ok"
             };
             var client = GetJsonClient();
-            client.SetCredentials(DefaultAdmin.Username, DefaultAdmin.Password);
+            client.SetCredentials(DefaultAdmin.Email, DefaultAdmin.Password);
             var results = client.Post(transaction);
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Id > 0);
@@ -117,19 +117,19 @@ namespace Auth_404.UnitTests
             var authResponse = client.Send(new Authenticate
             {
                 provider = CredentialsAuthProvider.Name,
-                UserName = DefaultAdmin.Username,
+                UserName = DefaultAdmin.Email,
                 Password = DefaultAdmin.Password,
                 RememberMe = true,
             });
 
             Assert.IsNotNull(authResponse);
             Assert.IsNotNull(authResponse.SessionId);
-            Assert.AreEqual(DefaultAdmin.Username, authResponse.UserName);
+            Assert.AreEqual(DefaultAdmin.Email, authResponse.UserName);
 
             var response = client.Get<AuthenticateResponse>("/auth");
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.SessionId);
-            Assert.AreEqual(DefaultAdmin.Username, response.UserName);
+            Assert.AreEqual(DefaultAdmin.Email, response.UserName);
 
             var transactions = client.Get<List<Transaction>>("/transactions");
             Assert.IsNotNull(transactions);

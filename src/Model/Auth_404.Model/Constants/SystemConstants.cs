@@ -55,12 +55,22 @@ namespace Auth_404.Model.Constants
 
     public static class DefaultAdmin
     {
-        public const int Id = 101;
-        public const string Email = "rhartman@omnisite";
-        public const string Username = "Administrator";
+        public const string Email = "rhartman@omnisite.com";
+        //public const string Username = "Administrator";
         public const string Password = "dfjk232f00232D232!";
         public static readonly List<string> Roles = new List<string> {"Admin"};
         public static readonly List<string> Permissions = new List<string> {"Admin"};
+    };
+
+    public static class TestUser
+    {
+        public const string Email = "ryandavidhartman@gmail.com";
+        //public const string Username = "TestUser";
+        public const string Password = "bob4001";
+        public const string FirstName = "Ryan";
+        public const string LastName = "Hartman";
+        public static readonly List<string> Roles = new List<string> { "User" };
+        public static readonly List<string> Permissions = new List<string> { "User" };
     };
 
 

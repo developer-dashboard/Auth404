@@ -13,7 +13,7 @@ namespace Auth_404.WebAPI.Services
         public override object Get(GetTransactions request)
         {
             var session = GetSession();
-            var userName = session.UserName;
+            var userName = session.UserAuthName;
             if (string.IsNullOrEmpty(userName))
                 throw new ApplicationException("What the hell! No User?!?");
             return base.Get(request);
@@ -24,7 +24,7 @@ namespace Auth_404.WebAPI.Services
         public override object Post(Transaction data)
         {
             var session = GetSession();
-            var userName = session.UserName;
+            var userName = session.UserAuthName;
             if (string.IsNullOrEmpty(userName))
                 throw new ApplicationException("What the hell! No User?!?");
             

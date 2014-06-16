@@ -49,8 +49,8 @@ namespace Auth_404.WebAPI
             container.Register<IAuthProvider>(basicAuthProvider);
             container.Register<IAuthSession>(authUserSession);
              */
-            
-            container.Register<IAuthRepository>(userRepo);
+
+            container.Register<IUserAuthRepository>(userRepo);
 
            
             
