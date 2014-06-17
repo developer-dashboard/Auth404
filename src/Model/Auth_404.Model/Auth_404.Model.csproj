@@ -120,10 +120,8 @@
     <Compile Include="Operations\GetTransactionStatusTypes.cs" />
     <Compile Include="Operations\GetTransactionTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\CreateLoginRequest.cs" />
-    <Compile Include="Requests\CreateLoginResponse.cs" />
-    <Compile Include="Requests\GetLoginRequest.cs" />
-    <Compile Include="Requests\GetLoginResponse.cs" />
+    <Compile Include="Requests\UserRegistrationRequest.cs" />
+    <Compile Include="Requests\UserRegistrationResponse.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

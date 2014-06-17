@@ -4,11 +4,14 @@ using Auth_404.DataLayer.Repositories;
 using Auth_404.Model.Constants;
 using Auth_404.Model.Data;
 using Auth_404.Model.Operations;
+using Auth_404.Model.Requests;
+using Auth_404.WebAPI.Services;
 using Funq;
 using RESTServiceUtilities.Interfaces;
 using ServiceStack;
 using ServiceStack.Auth;
 using ServiceStack.Data;
+using ServiceStack.FluentValidation;
 using ServiceStack.Logging;
 using ServiceStack.Logging.Log4Net;
 using ServiceStack.OrmLite;
@@ -43,10 +46,16 @@ namespace Auth_404.WebAPI
             Plugins.Add(new AuthFeature(() => new AuthUserSession(),
                 new IAuthProvider[] {new BasicAuthProvider(), new CredentialsAuthProvider()}, SystemConstants.LoginUrl));
 
-            Plugins.Add(new RegistrationFeature());
+            //No use a custom one
+            //Plugins.Add(new RegistrationFeature());
            
             var userRepo = new OrmLiteAuthRepository(_authDbConnectionFactory);
+           
             container.Register<IUserAuthRepository>(userRepo);
+
+            //wire-up a validator for the UserRegistrationService
+            var userRegistrationValidator = new UserRegistrationRequestValidator {UserAuthRepo = userRepo};
+            container.Register<IValidator<UserRegistrationRequest>>(userRegistrationValidator);
             
             var currencyTypeRepository = new CurrencyTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
             var transactionTypeRepository = new TransactionTypeRepository { DbConnectionFactory = _appDbConnectionFactory };
