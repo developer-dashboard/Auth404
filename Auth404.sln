@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{936BE5
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth404.IntegrationTests", "Auth404.IntegrationTests\Auth404.IntegrationTests.csproj", "{758977DD-D16E-4ED5-9B9B-0B1B0CBC9916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,11 +56,16 @@ Global
 		{B4AB0D02-88A4-4540-8560-0C059F2626D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4AB0D02-88A4-4540-8560-0C059F2626D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4AB0D02-88A4-4540-8560-0C059F2626D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{758977DD-D16E-4ED5-9B9B-0B1B0CBC9916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{758977DD-D16E-4ED5-9B9B-0B1B0CBC9916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{758977DD-D16E-4ED5-9B9B-0B1B0CBC9916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{758977DD-D16E-4ED5-9B9B-0B1B0CBC9916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B4AB0D02-88A4-4540-8560-0C059F2626D6} = {A0FB1C58-18D3-4BAE-89F0-FD39744098D9}
+		{758977DD-D16E-4ED5-9B9B-0B1B0CBC9916} = {A0FB1C58-18D3-4BAE-89F0-FD39744098D9}
 	EndGlobalSection
 EndGlobal

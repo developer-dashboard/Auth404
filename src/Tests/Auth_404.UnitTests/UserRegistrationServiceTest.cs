@@ -118,13 +118,24 @@ namespace Auth_404.UnitTests
         public void Accepts_valid_registration()
         {
             var service = GetRegistrationService();
-            var request = GetValidRegistration();
+            var request = GetValidRegistrationRequest();
             var response = service.Post(request);
 
             Assert.That(response as UserRegistrationResponse, Is.Not.Null);
         }
 
-        public static UserRegistrationRequest GetValidRegistration(bool autoLogin = false)
+        /*
+        [Test]
+        public void Accepts_valid_registration_with_autologon()
+        {
+            var service = GetRegistrationService();
+            var request = GetValidRegistrationRequest(true);
+            var response = service.Post(request);
+
+            Assert.That(response as UserRegistrationResponse, Is.Not.Null);
+        }*/
+
+        public static UserRegistrationRequest GetValidRegistrationRequest(bool autoLogin = false)
         {
             var request = new UserRegistrationRequest
             {
@@ -182,7 +193,7 @@ namespace Auth_404.UnitTests
         {
             var service = GetRegistrationService(null, null, MimeTypes.Html);
 
-            var request = GetValidRegistration();
+            var request = GetValidRegistrationRequest();
             request.Continue = "http://localhost/home";
 
             var response = service.Post(request) as HttpResult;
@@ -198,7 +209,7 @@ namespace Auth_404.UnitTests
         {
             var service = GetRegistrationService(null, null, MimeTypes.Html);
 
-            var request = GetValidRegistration();
+            var request = GetValidRegistrationRequest();
             request.Continue = string.Empty;
 
             var response = service.Post(request);
@@ -212,7 +223,7 @@ namespace Auth_404.UnitTests
         {
             var service = GetRegistrationService(null, null, MimeTypes.Json);
 
-            var request = GetValidRegistration();
+            var request = GetValidRegistrationRequest();
             request.Continue = "http://localhost/home";
 
             var response = service.Post(request) as UserRegistrationResponse;
