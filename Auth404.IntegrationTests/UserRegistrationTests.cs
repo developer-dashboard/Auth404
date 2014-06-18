@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using Auth_404.DatabaseSetup;
+using Auth_404.Model.Constants;
 using Auth_404.Model.Data;
 using Auth_404.Model.Operations;
 using Auth_404.Model.Requests;
@@ -142,7 +143,7 @@ namespace Auth404.IntegrationTests
         }
 
         [Test]
-        public void user_can_update_their_registration()
+        public void user_can_update_their_password()
         {
             // ReSharper disable RedundantTypeArgumentsOfMethod
             var createRequest = new UserRegistrationRequest
@@ -180,6 +181,44 @@ namespace Auth404.IntegrationTests
         }
 
         [Test]
+        public void user_can_update_their_email()
+        {
+            // ReSharper disable RedundantTypeArgumentsOfMethod
+            var createRequest = new UserRegistrationRequest
+            {
+                Email = "user8@gmail.com",
+                Password = "user8",
+                AutoLogin = true
+            };
+
+            var createResponse = RestClient.Post<UserRegistrationResponse>(createRequest);
+            Assert.IsNotNull(createResponse);
+            Assert.IsTrue(createResponse.UserId.Length > 0);
+
+            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate());
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual(createRequest.Email, checkLoginStatus.UserName);
+
+            //update the password
+            var updateRequest = new UserRegistrationRequest { Password = "user8", Email = "updated@hotmail.com"};
+            var updateResponse = RestClient.Put<UserRegistrationResponse>(updateRequest);
+            Assert.IsNotNull(updateResponse);
+            Assert.IsTrue(updateResponse.UserId.Length > 0);
+
+            //logout
+            Logout();
+
+            //logon with the new email
+            checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate { provider = "credentials", UserName = "updated@hotmail.com", Password = "user8" });
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual("updated@hotmail.com", checkLoginStatus.UserName);
+
+            //logout
+            Logout();
+            // ReSharper restore RedundantTypeArgumentsOfMethod-
+        }
+
+        [Test]
         public void user_can_not_update_if_not_authenticated()
         {
             // ReSharper disable RedundantTypeArgumentsOfMethod
@@ -206,6 +245,81 @@ namespace Auth404.IntegrationTests
             var updateRequest = new UserRegistrationRequest {Email = "user5@gmail.com", Password = "UPDATED"};
             var error = Assert.Throws<WebServiceException>(() => RestClient.Put<UserRegistrationResponse>(updateRequest));
             Assert.AreEqual("Unauthorized", error.Message);
+            // ReSharper restore RedundantTypeArgumentsOfMethod
+        }
+        
+        [Test]
+        public void user_an_admin_update_registration_password()
+        {
+            // ReSharper disable RedundantTypeArgumentsOfMethod
+            var createRequest = new UserRegistrationRequest
+            {
+                Email = "user6@gmail.com",
+                Password = "user6",
+                AutoLogin = true
+            };
+
+            var createResponse = RestClient.Post<UserRegistrationResponse>(createRequest);
+            Assert.IsNotNull(createResponse);
+            Assert.IsTrue(createResponse.UserId.Length > 0);
+
+            //login as admin
+            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate { provider = "credentials", UserName = DefaultAdmin.Email, Password = DefaultAdmin.Password });
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual(DefaultAdmin.Email, checkLoginStatus.UserName);
+
+            //update password
+            var updateResponse = RestClient.Post<UpdateUserRegistrationPasswordResponse>(new UpdateUserRegistrationPasswordRequest{Email = "user6@gmail.com", NewPassword = "UPDATED"});
+            Assert.IsNotNull(updateResponse);
+            Assert.IsTrue(updateResponse.UserId.Length > 0);
+
+            //logoff
+            Logout();
+
+            // login as the updated user
+            checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate { provider = "credentials", UserName = "user6@gmail.com", Password = "UPDATED"});
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual("user6@gmail.com", checkLoginStatus.UserName);
+
+            //logoff
+            Logout();
+           
+            // ReSharper restore RedundantTypeArgumentsOfMethod-
+        }
+
+        [Test]
+        public void non_admins_can_not_update_other_passwords()
+        {
+            // ReSharper disable RedundantTypeArgumentsOfMethod
+            var createRequest = new UserRegistrationRequest
+            {
+                Email = "user7@gmail.com",
+                Password = "user7",
+                AutoLogin = true
+            };
+
+            var createResponse = RestClient.Post<UserRegistrationResponse>(createRequest);
+            Assert.IsNotNull(createResponse);
+            Assert.IsTrue(createResponse.UserId.Length > 0);
+
+
+            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate());
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual(createRequest.Email, checkLoginStatus.UserName);
+
+            //login as a non-admin
+            checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate { provider = "credentials", UserName = TestUser.Email, Password = TestUser.Password });
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual(TestUser.Email, checkLoginStatus.UserName);
+
+           
+            // try and fail update the password
+            var updateRequest = new UpdateUserRegistrationPasswordRequest { Email = "user7@gmail.com", NewPassword = "UPDATED" };
+            var error = Assert.Throws<WebServiceException>(() => RestClient.Post<UpdateUserRegistrationPasswordResponse>(updateRequest));
+            Assert.AreEqual("Invalid Role", error.Message);
+
+            //logout
+            Logout();
             // ReSharper restore RedundantTypeArgumentsOfMethod
         }
     }

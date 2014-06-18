@@ -178,7 +178,7 @@ namespace Auth_404.WebAPI.Services
             var newUserAuth = ToUserAuth(request);
 
             if (string.IsNullOrEmpty(newUserAuth.Email)) newUserAuth.Email = existingUser.Email;
-            if (string.IsNullOrEmpty(newUserAuth.DisplayName)) newUserAuth.DisplayName = existingUser.DisplayName;
+            if (string.IsNullOrEmpty(newUserAuth.DisplayName)) newUserAuth.DisplayName = newUserAuth.Email;
             
             userAuthRepo.UpdateUserAuth(existingUser, newUserAuth, request.Password);
 

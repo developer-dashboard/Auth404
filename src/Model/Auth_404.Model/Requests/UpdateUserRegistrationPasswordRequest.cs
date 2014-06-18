@@ -2,7 +2,7 @@
 
 namespace Auth_404.Model.Requests
 {
-    [Route("/UpdateUserRegistrationEmailRequest", "POST")]
+    [Route("/UpdateUserRegistrationPasswordRequest", "POST")]
     public class UpdateUserRegistrationPasswordRequest : IReturn<UpdateUserRegistrationPasswordResponse>
     {
         public string Email { get; set; }
