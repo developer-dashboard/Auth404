@@ -40,9 +40,9 @@ namespace Auth404.IntegrationTests
             //logout
             RestClient.Post(new Authenticate {provider = "logout"});
 
-            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate());
-            Assert.IsNotNull(checkLoginStatus);
-            Assert.IsNullOrEmpty(checkLoginStatus.UserName);
+            // Check to see if we are logged out.
+            var error = Assert.Throws<WebServiceException>(() => RestClient.Post<AuthenticateResponse>(new Authenticate()));
+            Assert.AreEqual("Not Authenticated", error.Message);
             // ReSharper restore RedundantTypeArgumentsOfMethod
         }
 
@@ -87,13 +87,17 @@ namespace Auth404.IntegrationTests
 
             //logout - in case we had an open session
             RestClient.Post(new Authenticate {provider = "logout"});
-            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate());
-            Assert.IsNotNull(checkLoginStatus);
-            Assert.IsNullOrEmpty(checkLoginStatus.UserName);
+            var error = Assert.Throws<WebServiceException>(() => RestClient.Post<AuthenticateResponse>(new Authenticate()));
+            Assert.AreEqual("Not Authenticated", error.Message);
 
 
             // login the user in
-            checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate {provider = "credentials", UserName = "user2@gmail.com", Password = "user2"});
+            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate {provider = "credentials", UserName = "user2@gmail.com", Password = "user2"});
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual("user2@gmail.com", checkLoginStatus.UserName);
+
+            // we should stay logged in
+            checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate());
             Assert.IsNotNull(checkLoginStatus);
             Assert.AreEqual("user2@gmail.com", checkLoginStatus.UserName);
 
@@ -118,11 +122,7 @@ namespace Auth404.IntegrationTests
             Assert.IsTrue(createResponse.UserId.Length > 0);
 
             //logout - in case we had an open session
-            RestClient.Post(new Authenticate {provider = "logout"});
-            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate());
-            Assert.IsNotNull(checkLoginStatus);
-            Assert.IsNullOrEmpty(checkLoginStatus.UserName);
-
+            Logout();
 
             // login the user in by making a request with a Basic Auth Header
             var client = new JsonServiceClient {AlwaysSendBasicAuthHeader = true, BaseUri = WebServiceHostUrl, UserName = "user3@gmail.com", Password = "user3"};
@@ -130,15 +130,12 @@ namespace Auth404.IntegrationTests
             Assert.IsNotNull(response);
 
 
-            checkLoginStatus = client.Post<AuthenticateResponse>(new Authenticate());
+            var checkLoginStatus = client.Post<AuthenticateResponse>(new Authenticate());
             Assert.IsNotNull(checkLoginStatus);
             Assert.AreEqual("user3@gmail.com", checkLoginStatus.UserName);
 
             //logout
-            RestClient.Post(new Authenticate {provider = "logout"});
-            checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate());
-            Assert.IsNotNull(checkLoginStatus);
-            Assert.IsNullOrEmpty(checkLoginStatus.UserName);
+            Logout();
             // ReSharper restore RedundantTypeArgumentsOfMethod
         }
 

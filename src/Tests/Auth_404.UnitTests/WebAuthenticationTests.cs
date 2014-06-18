@@ -147,10 +147,8 @@ namespace Auth_404.UnitTests
             Assert.That(logoutResponse.ResponseStatus.ErrorCode, Is.Null);
 
             //finally check to ensure logout
-            response = client.Get<AuthenticateResponse>("/auth");
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.SessionId);
-            Assert.IsNull(response.UserName);
+            var error1 = Assert.Throws<WebServiceException>(() =>client.Get<AuthenticateResponse>("/auth"));
+            Assert.AreEqual("Not Authenticated", error1.Message);
 
             var error = Assert.Throws<WebServiceException>(() =>client.Get<List<Transaction>>("/transactions"));
             Assert.AreEqual("Unauthorized", error.Message);
