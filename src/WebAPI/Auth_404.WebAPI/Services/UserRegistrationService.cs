@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Auth_404.Model.Requests;
 using ServiceStack;
@@ -179,8 +180,6 @@ namespace Auth_404.WebAPI.Services
             if (string.IsNullOrEmpty(newUserAuth.Email)) newUserAuth.Email = existingUser.Email;
             if (string.IsNullOrEmpty(newUserAuth.DisplayName)) newUserAuth.DisplayName = existingUser.DisplayName;
             
-
-
             userAuthRepo.UpdateUserAuth(existingUser, newUserAuth, request.Password);
 
             return new UserRegistrationResponse
@@ -189,7 +188,65 @@ namespace Auth_404.WebAPI.Services
             };
         }
 
+        /// <summary>
+        ///     Let's an Admin update a Registration's Email Address
+        /// </summary>
+        [Authenticate]
+        [RequiredRole("Admin")]
+        public object Post(UpdateUserRegistrationEmailRequest request)
+        {
+            var userAuthRepo = AuthRepo.AsUserAuthRepository(GetResolver());
+            var existingUser = userAuthRepo.GetUserAuthByUserName(request.OldEmail);
+            if (existingUser == null)
+            {
+                var rs = new ResponseStatus { Message = request.OldEmail + " Not Found", ErrorCode = "404" };
+                return new UpdateUserRegistrationEmailResponse { ResponseStatus = rs };
+            }
 
+            var newUserAuth = existingUser;
+            newUserAuth.DisplayName = request.NewEmail;
+            newUserAuth.Email = request.NewEmail;
+            
+            var updatedUser = userAuthRepo.UpdateUserAuth(existingUser, newUserAuth, null);
+
+            return new UpdateUserRegistrationEmailResponse
+            {
+                DisplayName = updatedUser.DisplayName,
+                UserId = updatedUser.Id.ToString(CultureInfo.InvariantCulture),
+                ResponseStatus = new ResponseStatus { Message = "200" }
+            };
+        }
+
+        /// <summary>
+        ///     Let's an Admin update a Registration's Password
+        /// </summary>
+        [Authenticate]
+        [RequiredRole("Admin")]
+        public object Post(UpdateUserRegistrationPasswordRequest request)
+        {
+            var userAuthRepo = AuthRepo.AsUserAuthRepository(GetResolver());
+            var existingUser = userAuthRepo.GetUserAuthByUserName(request.Email);
+            if (existingUser == null)
+            {
+                var rs = new ResponseStatus {Message = request.Email + " Not Found", ErrorCode = "404"};
+                return new UpdateUserRegistrationPasswordResponse {ResponseStatus = rs};
+            }
+                
+            var newUserAuth = existingUser;
+            var updatedUser = userAuthRepo.UpdateUserAuth(existingUser, newUserAuth, request.NewPassword);
+            
+            return new UpdateUserRegistrationPasswordResponse
+            {
+                DisplayName = updatedUser.DisplayName,
+                UserId = updatedUser.Id.ToString(CultureInfo.InvariantCulture),
+                ResponseStatus = new ResponseStatus {Message = "200"}
+            };
+        }
+
+
+        
+        // Helper Functions
+        
         public UserAuth ToUserAuth(UserRegistrationRequest request)
         {
             var to = request.ConvertTo<UserAuth>();
