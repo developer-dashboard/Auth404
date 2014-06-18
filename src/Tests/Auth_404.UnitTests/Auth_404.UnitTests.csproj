@@ -52,13 +52,11 @@
     <Reference Include="RESTServiceUtilities">
       <HintPath>..\..\..\packages\RESTServiceUtilities.1.0.5282.21085\lib\net45\RESTServiceUtilities.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ServiceStack.4.0.21\lib\net40\ServiceStack.dll</HintPath>
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\..\packages\ServiceStack.4.0.22\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Client, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ServiceStack.Client.4.0.21\lib\net40\ServiceStack.Client.dll</HintPath>
+    <Reference Include="ServiceStack.Client">
+      <HintPath>..\..\..\packages\ServiceStack.Client.4.0.22\lib\net40\ServiceStack.Client.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common">
       <HintPath>..\..\..\packages\ServiceStack.Common.4.0.22\lib\net40\ServiceStack.Common.dll</HintPath>
