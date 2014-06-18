@@ -23,7 +23,7 @@ namespace Auth404.IntegrationTests
             WebServiceHostUrl = ConfigurationManager.AppSettings["ServerUrl"];
             RestClient = new JsonServiceClient(WebServiceHostUrl);
 
-            DataBaseHelper.Settup_Test_Database();
+            DataBaseHelper.Setup_Test_Database();
         }
 
         [TestFixtureTearDown]

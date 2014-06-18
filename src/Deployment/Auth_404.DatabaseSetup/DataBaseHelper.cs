@@ -11,10 +11,10 @@ namespace Auth_404.DatabaseSetup
     {
         private static void Main()
         {
-            Settup_Test_Database();
+            Setup_Test_Database();
         }
 
-        public static void Settup_Test_Database(IDbConnectionFactory appDbFactory = null, IDbConnectionFactory authDbFactory = null)
+        public static void Setup_Test_Database(IDbConnectionFactory appDbFactory = null, IDbConnectionFactory authDbFactory = null)
         {
             var appDbConnectionFactory = appDbFactory;
             var authDbConnectionFactory = authDbFactory;

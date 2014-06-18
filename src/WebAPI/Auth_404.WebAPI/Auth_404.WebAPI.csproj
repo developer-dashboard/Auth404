@@ -49,7 +49,7 @@
       <HintPath>..\..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="CommonServiceUtilities">
-      <HintPath>..\..\..\packages\CommonServiceUtilities.1.0.5275.19571\lib\net45\CommonServiceUtilities.dll</HintPath>
+      <HintPath>..\..\..\packages\CommonServiceUtilities.1.0.5282.21084\lib\net45\CommonServiceUtilities.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -76,46 +76,37 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="RESTServiceUtilities">
-      <HintPath>..\..\..\packages\RESTServiceUtilities.1.0.5275.19571\lib\net45\RESTServiceUtilities.dll</HintPath>
+      <HintPath>..\..\..\packages\RESTServiceUtilities.1.0.5282.21085\lib\net45\RESTServiceUtilities.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack">
-      <HintPath>..\..\..\packages\ServiceStack.4.0.21\lib\net40\ServiceStack.dll</HintPath>
+      <HintPath>..\..\..\packages\ServiceStack.4.0.22\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Client, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ServiceStack.Client.4.0.21\lib\net40\ServiceStack.Client.dll</HintPath>
+    <Reference Include="ServiceStack.Client">
+      <HintPath>..\..\..\packages\ServiceStack.Client.4.0.22\lib\net40\ServiceStack.Client.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ServiceStack.Common.4.0.21\lib\net40\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\..\packages\ServiceStack.Common.4.0.22\lib\net40\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ServiceStack.Interfaces.4.0.21\lib\net40\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\..\packages\ServiceStack.Interfaces.4.0.22\lib\net40\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Logging.Log4Net">
-      <HintPath>..\..\..\packages\ServiceStack.Logging.Log4Net.4.0.21\lib\net40\ServiceStack.Logging.Log4Net.dll</HintPath>
+      <HintPath>..\..\..\packages\ServiceStack.Logging.Log4Net.4.0.22\lib\net40\ServiceStack.Logging.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.OrmLite">
-      <HintPath>..\..\..\packages\ServiceStack.OrmLite.4.0.21\lib\net40\ServiceStack.OrmLite.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\ServiceStack.OrmLite.4.0.22\lib\net40\ServiceStack.OrmLite.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.OrmLite.SqlServer">
-      <HintPath>..\..\..\packages\ServiceStack.OrmLite.SqlServer.4.0.21\lib\net40\ServiceStack.OrmLite.SqlServer.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\ServiceStack.OrmLite.SqlServer.4.0.22\lib\net40\ServiceStack.OrmLite.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Redis, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ServiceStack.Redis.4.0.21\lib\net40\ServiceStack.Redis.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\..\..\packages\ServiceStack.Redis.4.0.22\lib\net40\ServiceStack.Redis.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Server">
-      <HintPath>..\..\..\packages\ServiceStack.Server.4.0.21\lib\net40\ServiceStack.Server.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\ServiceStack.Server.4.0.22\lib\net40\ServiceStack.Server.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=4.0.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ServiceStack.Text.4.0.21\lib\net40\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\packages\ServiceStack.Text.4.0.22\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -137,7 +128,7 @@
       <HintPath>..\..\..\packages\WebActivator.1.5\lib\net40\WebActivator.dll</HintPath>
     </Reference>
     <Reference Include="WebServiceUtilities">
-      <HintPath>..\..\..\packages\WebServiceUtilities.1.0.5275.19571\lib\net45\WebServiceUtilities.dll</HintPath>
+      <HintPath>..\..\..\packages\WebServiceUtilities.1.0.5282.21086\lib\net45\WebServiceUtilities.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace Auth_404.UnitTests
             _appDbConnectionFactory = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
             _authDbConnectionFactory = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
 
-            DataBaseHelper.Settup_Test_Database(_appDbConnectionFactory, _authDbConnectionFactory);
+            DataBaseHelper.Setup_Test_Database(_appDbConnectionFactory, _authDbConnectionFactory);
 
             _appHost = new Auth_404AppHost(_appDbConnectionFactory, _authDbConnectionFactory);
             _appHost.Init();
