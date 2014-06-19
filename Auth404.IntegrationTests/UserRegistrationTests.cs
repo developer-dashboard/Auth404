@@ -7,6 +7,7 @@ using Auth_404.Model.Operations;
 using Auth_404.Model.Requests;
 using NUnit.Framework;
 using ServiceStack;
+using ServiceStack.Auth;
 
 namespace Auth404.IntegrationTests
 {
@@ -308,6 +309,7 @@ namespace Auth404.IntegrationTests
             checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate { provider = "credentials", UserName = TestUser.Email, Password = TestUser.Password });
             Assert.IsNotNull(checkLoginStatus);
             Assert.AreEqual(TestUser.Email, checkLoginStatus.UserName);
+            
 
            
             // try and fail update the password
@@ -319,5 +321,38 @@ namespace Auth404.IntegrationTests
             Logout();
             // ReSharper restore RedundantTypeArgumentsOfMethod
         }
+
+        [Test]
+        public void can_assign_roles()
+        {
+            var createRequest = new UserRegistrationRequest
+            {
+                Email = "user8@gmail.com",
+                Password = "user8",
+                AutoLogin = false
+            };
+
+            var createResponse = RestClient.Post<UserRegistrationResponse>(createRequest);
+            Assert.IsNotNull(createResponse);
+            Assert.IsTrue(createResponse.UserId.Length > 0);
+
+            //login an admin
+            var checkLoginStatus = RestClient.Post<AuthenticateResponse>(new Authenticate { provider = "credentials", UserName = DefaultAdmin.Email, Password = DefaultAdmin.Password });
+            Assert.IsNotNull(checkLoginStatus);
+            Assert.AreEqual(DefaultAdmin.Email, checkLoginStatus.UserName);
+
+            var response = RestClient.Post(
+                new AssignRoles
+                {
+                    UserName = "user8@gmail.com",
+                    Roles = { "Role1", "Role2" },
+                    Permissions = { "Permission1", "Permission2" }
+                });
+
+            Assert.That(response.AllRoles, Is.EquivalentTo(new[] { "Role1", "Role2" }));
+            Assert.That(response.AllPermissions, Is.EquivalentTo(new[] { "Permission1", "Permission2" }));
+            
+        }
+
     }
 }

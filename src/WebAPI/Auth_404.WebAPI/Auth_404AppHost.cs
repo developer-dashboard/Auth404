@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using Auth_404.BusinessLogic.BusinessLogic;
 using Auth_404.DataLayer.Repositories;
 using Auth_404.Model.Constants;
@@ -44,7 +45,7 @@ namespace Auth_404.WebAPI
             container.Register(_appDbConnectionFactory);
 
             Plugins.Add(new AuthFeature(() => new AuthUserSession(),
-                new IAuthProvider[] {new BasicAuthProvider(), new CredentialsAuthProvider()}, SystemConstants.LoginUrl));
+                new IAuthProvider[] {new BasicAuthProvider(), new CredentialsAuthProvider(),}) {HtmlRedirect = null});
 
             //No use a custom one
             //Plugins.Add(new RegistrationFeature());
